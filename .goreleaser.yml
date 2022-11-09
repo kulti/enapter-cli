@@ -3,7 +3,7 @@ project_name: enapter-cli
 
 release:
   github:
-    owner: enapter
+    owner: kulti
     name: enapter-cli
 
 builds:
