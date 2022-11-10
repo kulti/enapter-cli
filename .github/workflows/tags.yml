@@ -33,4 +33,4 @@ jobs:
             echo "======"
             echo "${{steps.goreleaser.outputs.artifacts}}" | sed 's/type/XtypeX/'
             echo "======"
-            echo "${{steps.goreleaser.outputs.artifacts}}" | ./jq .
+            echo '${{steps.goreleaser.outputs.artifacts}}' | ./jq .
