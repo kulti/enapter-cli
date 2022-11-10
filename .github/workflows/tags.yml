@@ -29,7 +29,7 @@ jobs:
             wget -q https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64 -O jq
             chmod +x ./jq
             echo "======"
-            echo '${{steps.goreleaser.outputs.artifacts}}' | ./jq '.[] | select((.goos=="linux") and (.type=="Archive")) | {name}'
+            echo '${{steps.goreleaser.outputs.artifacts}}' | ./jq '.[] | select((.goos=="linux") and (.type=="Archive")) | .name'
             echo "======"
             tag=$(echo '${{steps.goreleaser.outputs.metadata}}' | ./jq '.tag')
             echo "===${tag}==="
