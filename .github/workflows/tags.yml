@@ -26,8 +26,9 @@ jobs:
 
       - name: Update install links
         run: |
+            wget https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64 -O jq
             echo "======"
-            echo ${{steps.goreleaser.outputs.artifacts}}
+            echo "${{steps.goreleaser.outputs.artifacts}}" | ./jq '.[] | select((.goos=="linux") and (.type=="Archive")) | {name}'"
             echo "======"
-            echo ${{steps.goreleaser.outputs.metadata}}
-            echo "======"
+            tag=$(echo "${{steps.goreleaser.outputs.metadata}} | ./jq '.tag'")
+            echo "===${tag}==="
