@@ -28,10 +28,10 @@ jobs:
         run: |
             wget -q https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64 -O jq
             chmod +x ./jq
-            tag=$(echo '${{steps.goreleaser.outputs.metadata}}' | ./jq '.tag')
-            linux_name='${{steps.goreleaser.outputs.artifacts}}' | ./jq '.[] | select((.goos=="linux") and (.type=="Archive")) | .name'
-            mac_name='${{steps.goreleaser.outputs.artifacts}}' | ./jq '.[] | select((.goos=="darwin") and (.type=="Archive")) | .name'
-            windows_name='${{steps.goreleaser.outputs.artifacts}}' | ./jq '.[] | select((.goos=="windows") and (.type=="Archive")) | .name'
+            tag=$(echo '${{steps.goreleaser.outputs.metadata}}' | ./jq --raw-output '.tag')
+            linux_name=$(echo '${{steps.goreleaser.outputs.artifacts}}' | ./jq --raw-output '.[] | select((.goos=="linux") and (.type=="Archive")) | .name')
+            mac_name=$(echo '${{steps.goreleaser.outputs.artifacts}}' | ./jq --raw-output '.[] | select((.goos=="darwin") and (.type=="Archive")) | .name')
+            windows_name='$(echo ${{steps.goreleaser.outputs.artifacts}}' | ./jq --raw-output '.[] | select((.goos=="windows") and (.type=="Archive")) | .name')
             echo "===https://github.com/Enapter/enapter-cli/releases/download/${tag}/${linux_name}==="
             echo "===https://github.com/Enapter/enapter-cli/releases/download/${tag}/${mac_name}==="
             echo "===https://github.com/Enapter/enapter-cli/releases/download/${tag}/${windows_name}==="
