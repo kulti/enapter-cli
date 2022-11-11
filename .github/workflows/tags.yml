@@ -33,6 +33,6 @@ jobs:
             mac_name=$(echo '${{steps.goreleaser.outputs.artifacts}}' | ./jq --raw-output '.[] | select((.goos=="darwin") and (.type=="Archive")) | .name')
             win_name=$(echo '${{steps.goreleaser.outputs.artifacts}}' | ./jq --raw-output '.[] | select((.goos=="windows") and (.type=="Archive")) | .name')
             download_prefix="https://github.com/${{github.repository}}/releases/download/${tag}/"
-            curl -H "X-Api-Key: e029f121-c5e0-46f3-98a8-54c7c80698f3" -H 'Content-Type: application/json' -X PATCH https://go.enapter.com/rest/v3/short-urls/enaptercli-linux-install -d "{\"longUrl\":\"${download_prefix}${linux_name}\"}"
-            echo "===${download_prefix}${mac_name}==="
-            echo "===${download_prefix}${win_name}==="
+            curl -q -H "X-Api-Key: e029f121-c5e0-46f3-98a8-54c7c80698f3" -H 'Content-Type: application/json' -X PATCH https://go.enapter.com/rest/v3/short-urls/enaptercli-linux-install -d "{\"longUrl\":\"${download_prefix}${linux_name}\"}"
+            curl -q -H "X-Api-Key: e029f121-c5e0-46f3-98a8-54c7c80698f3" -H 'Content-Type: application/json' -X PATCH https://go.enapter.com/rest/v3/short-urls/enaptercli-macos-install -d "{\"longUrl\":\"${download_prefix}${mac_name}\"}"
+            curl -q -H "X-Api-Key: e029f121-c5e0-46f3-98a8-54c7c80698f3" -H 'Content-Type: application/json' -X PATCH https://go.enapter.com/rest/v3/short-urls/enaptercli-windows-install -d "{\"longUrl\":\"${download_prefix}${win_name}\"}"
